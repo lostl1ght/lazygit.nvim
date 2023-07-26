@@ -1,7 +1,5 @@
 local api = vim.api
 
----@alias Scope "global"|"tabpage"
-
 ---@class Instance
 ---@field bufnr integer
 ---@field jobid integer
@@ -9,18 +7,15 @@ local api = vim.api
 
 ---@class LazyGitConfig
 ---@field winscale float
----@field scope Scope
 
 ---@class LazyGit
----@field instances table<string|integer, Instance>
+---@field instance Instance
 ---@field config LazyGitConfig
 local LazyGit = {
-  instances = {
-    global = {
-      bufnr = -1,
-      jobid = -1,
-      last_path = nil,
-    },
+  instance = {
+    bufnr = -1,
+    jobid = -1,
+    last_path = nil,
   },
   config = {
     winscale = 0.75,
@@ -41,45 +36,33 @@ end
 
 ---@return integer
 function LazyGit:get_bufnr()
-  if self.config.scope == 'global' then
-    return self.instances.global.bufnr
-  end
+  return self.instance.bufnr
 end
 
 ---@param bufnr integer
 function LazyGit:set_bufnr(bufnr)
-  if self.config.scope == 'global' then
-    self.instances.global.bufnr = bufnr
-  end
+  self.instance.bufnr = bufnr
 end
 
 ---@return integer
 function LazyGit:get_jobid()
-  if self.config.scope == 'global' then
-    return self.instances.global.jobid
-  end
+  return self.instance.jobid
 end
 
 ---@param jobid integer
 function LazyGit:set_jobid(jobid)
-  if self.config.scope == 'global' then
-    self.instances.global.jobid = jobid
-  end
+  self.instance.jobid = jobid
 end
 
 ---@return string?
 function LazyGit:get_last_path()
-  if self.config.scope == 'global' then
-    return self.instances.global.last_path
-  end
+  return self.instance.last_path
 end
 
 ---Set last path
 ---@param path string
 function LazyGit:set_last_path(path)
-  if self.config.scope == 'global' then
-    self.instances.global.last_path = path
-  end
+  self.instance.last_path = path
 end
 
 ---Create buffer
@@ -218,13 +201,6 @@ end
 function M.setup(opts)
   opts = opts or {}
   vim.validate({
-    scope = {
-      opts.scope,
-      function(v)
-        return v == nil or v == 'global' or v == 'tabpage'
-      end,
-      "'global' or 'tabpage'",
-    },
     winscale = {
       opts.winscale,
       function(v)

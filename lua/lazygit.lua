@@ -10,6 +10,7 @@ local api = vim.api
 
 ---@class LazyGit
 ---@field instance Instance
+---@field visited_repos string[]
 ---@field config LazyGitConfig
 local LazyGit = {
   instance = {
@@ -17,6 +18,7 @@ local LazyGit = {
     jobid = -1,
     last_path = nil,
   },
+  visited_repos = {},
   config = {
     winscale = 0.75,
     scope = 'global',
@@ -28,7 +30,7 @@ local LazyGit = {
 ---@diagnostic disable-next-line
 local function debug(...)
   local args = {}
-  for _, v in ipairs(a) do
+  for _, v in ipairs({ ... }) do
     table.insert(args, vim.inspect(v))
   end
   vim.notify(table.concat(args, ' '))
@@ -63,6 +65,20 @@ end
 ---@param path string
 function LazyGit:set_last_path(path)
   self.instance.last_path = path
+end
+
+function LazyGit:push_path(path)
+  local idx
+  for i, v in ipairs(self.visited_repos) do
+    if v == path then
+      idx = i
+      break
+    end
+  end
+  if idx then
+    table.remove(self.visited_repos, idx)
+  end
+  table.insert(self.visited_repos, 1, path)
 end
 
 ---Create buffer
@@ -144,6 +160,7 @@ function LazyGit:start_job(path)
     ---@diagnostic disable-next-line
     self:set_jobid(jobid)
     self:set_last_path(path)
+    self:push_path(path)
   end
 end
 

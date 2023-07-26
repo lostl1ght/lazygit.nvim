@@ -197,7 +197,8 @@ function M.open(path, use_last)
     ---@diagnostic disable-next-line
     path
       or use_last ~= false and LazyGit:get_last_path()
-      or (vim.uv.cwd or vim.loop.cwd)()
+      -- TODO: change to 'uv' only after 0.10
+      or (vim.uv and vim.uv.cwd or vim.loop.cwd)()
   )
   if not gitdir then
     vim.notify('not a git repo', vim.log.levels.ERROR, { title = 'Lazygit' })

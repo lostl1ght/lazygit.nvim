@@ -1,5 +1,8 @@
 local api = vim.api
 
+---@class LazyGitMappings
+---@field hide string
+
 ---@class Instance
 ---@field bufnr integer
 ---@field jobid integer
@@ -7,6 +10,7 @@ local api = vim.api
 
 ---@class LazyGitConfig
 ---@field winscale float
+---@field mappings LazyGitMappings
 
 ---@class LazyGit
 ---@field instance Instance
@@ -22,6 +26,9 @@ local LazyGit = {
   config = {
     winscale = 0.75,
     scope = 'global',
+    mappings = {
+      hide = '<c-q>',
+    },
   },
 }
 
@@ -121,6 +128,20 @@ function LazyGit:create_buffer()
         api.nvim_set_option_value('relativenumber', false, { scope = 'local', win = win })
       end,
     })
+    vim.keymap.set({ 't', 'n' }, self.config.mappings.hide, function()
+      self:close_window()
+    end, { buffer = bufnr })
+  end
+end
+
+---Close window
+function LazyGit:close_window()
+  local bufnr = self:get_bufnr()
+  ---@type integer
+  ---@diagnostic disable-next-line
+  local winid = vim.fn.bufwinid(bufnr)
+  if api.nvim_win_is_valid(winid) then
+    api.nvim_win_close(winid, true)
   end
 end
 
@@ -176,9 +197,7 @@ function LazyGit:drop()
   ---@type integer
   ---@diagnostic disable-next-line
   local winid = vim.fn.bufwinid(bufnr)
-  if api.nvim_win_is_valid(winid) then
-    api.nvim_win_close(winid, true)
-  end
+  self:close_window()
   if api.nvim_buf_is_loaded(bufnr) then
     api.nvim_set_option_value('bufhidden', 'wipe', { buf = bufnr })
     api.nvim_buf_delete(bufnr, { force = true })

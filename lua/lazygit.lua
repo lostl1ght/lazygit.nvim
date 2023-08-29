@@ -90,7 +90,10 @@ function LazyGit:create_buffer()
     api.nvim_create_autocmd('TermLeave', {
       buffer = bufnr,
       callback = vim.schedule_wrap(function()
+        ---@type integer
+        ---@diagnostic disable-next-line
         local winid = vim.fn.bufwinid(bufnr)
+
         if api.nvim_win_is_valid(winid) then
           vim.defer_fn(function()
             api.nvim_win_set_cursor(winid, { 1, 0 })
@@ -102,6 +105,8 @@ function LazyGit:create_buffer()
       buffer = bufnr,
       callback = function(args)
         vim.defer_fn(function()
+          ---@type integer
+          ---@diagnostic disable-next-line
           local winid = vim.fn.bufwinid(args.buf)
           api.nvim_win_set_cursor(winid, { 1, 0 })
           api.nvim_cmd({ cmd = 'startinsert' }, {})
@@ -131,6 +136,7 @@ function LazyGit:create_window()
     }, {})
     api.nvim_win_set_buf(0, bufnr)
   else
+    ---@diagnostic disable-next-line
     api.nvim_set_current_win(vim.fn.bufwinid(bufnr))
   end
 end
@@ -167,6 +173,8 @@ end
 ---Close window and buffer, reset parameters
 function LazyGit:drop()
   local bufnr = self:get_bufnr()
+  ---@type integer
+  ---@diagnostic disable-next-line
   local winid = vim.fn.bufwinid(bufnr)
   if api.nvim_win_is_valid(winid) then
     api.nvim_win_close(winid, true)

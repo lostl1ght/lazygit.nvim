@@ -1,5 +1,5 @@
 ---@class LazyGitConfig
----@field winscale float
+---@field winscale number
 ---@field mappings table
 
 local M = {

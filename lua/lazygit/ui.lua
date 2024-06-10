@@ -21,8 +21,6 @@ function M.create_buffer()
     api.nvim_create_autocmd('TermLeave', {
       buffer = bufnr,
       callback = vim.schedule_wrap(function()
-        ---@type integer
-        ---@diagnostic disable-next-line
         local winid = vim.fn.bufwinid(bufnr)
 
         if api.nvim_win_is_valid(winid) then
@@ -36,8 +34,6 @@ function M.create_buffer()
       buffer = bufnr,
       callback = function(args)
         vim.defer_fn(function()
-          ---@type integer
-          ---@diagnostic disable-next-line
           local winid = vim.fn.bufwinid(args.buf)
           api.nvim_win_set_cursor(winid, { 1, 0 })
           api.nvim_cmd({ cmd = 'startinsert' }, {})
@@ -76,17 +72,13 @@ function M.create_window()
       cmd = 'resize',
       args = { math.floor(vim.opt.lines:get() * require('lazygit.config').winscale) },
     }, {})
-    ---@diagnostic disable-next-line
     api.nvim_win_set_buf(0, M.bufnr)
   else
-    ---@diagnostic disable-next-line
     api.nvim_set_current_win(winid)
   end
 end
 
 function M.close_window()
-  ---@type integer
-  ---@diagnostic disable-next-line
   local winid = vim.fn.bufwinid(M.bufnr)
   if api.nvim_win_is_valid(winid) then
     api.nvim_win_close(winid, true)
@@ -96,13 +88,11 @@ end
 function M.start_job(path)
   local jobid = M.jobid
   if jobid == -1 then
-    ---@diagnostic disable-next-line
     jobid = vim.fn.termopen('lazygit -p ' .. path, {
       on_exit = function()
         M.drop()
       end,
     })
-    ---@diagnostic disable-next-line
     M.jobid = jobid
     M.last_path = path
     M.push_path(path)
@@ -111,9 +101,6 @@ end
 
 function M.drop()
   local bufnr = M.bufnr
-  ---@type integer
-  ---@diagnostic disable-next-line
-  local winid = vim.fn.bufwinid(bufnr)
   M.close_window()
   if api.nvim_buf_is_loaded(bufnr) then
     api.nvim_set_option_value('bufhidden', 'wipe', { buf = bufnr })

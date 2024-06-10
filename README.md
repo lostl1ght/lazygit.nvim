@@ -7,6 +7,7 @@ A [lazygit](https://github.com/jesseduffield/lazygit) integration into Neovim.
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Configuration](#configuration)
+- [Lazygit Configuration](#lazygit-configuration)
 - [Default Mappings](#default-mappings)
 
 ## Requirements
@@ -73,6 +74,14 @@ An action can be a function. This function accepts 1 argument which is a buffer 
 function(bufnr)
   print('Lazygit bufnr is' .. bufnr)
 end
+```
+
+## Lazygit Configuration
+
+```yaml
+os:
+  editPreset: 'nvim'
+promptToReturnFromSubprocess: false
 ```
 
 ## Default Mappings

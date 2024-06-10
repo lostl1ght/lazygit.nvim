@@ -6,7 +6,7 @@ A [lazygit](https://github.com/jesseduffield/lazygit) integration into Neovim.
 
 - [Requirements](#requirements)
 - [Installation](#installation)
-- [Configuration](#configuration)
+- [Plugin Configuration](#plugin-configuration)
 - [Lazygit Configuration](#lazygit-configuration)
 - [Default Mappings](#default-mappings)
 
@@ -48,7 +48,7 @@ return {
 
 Calling `setup` is optional.
 
-## Configuration
+## Plugin Configuration
 
 Default `setup` values:
 

@@ -12,7 +12,8 @@ A [lazygit](https://github.com/jesseduffield/lazygit) integration into Neovim.
 
 ## Requirements
 
-- Neovim 0.10
+- Neovim >=0.10
+- [Lazygit](https://github.com/jesseduffield/lazygit) >=0.38
 - [nvim-unception](https://github.com/samjwill/nvim-unception)
 
 ## Installation

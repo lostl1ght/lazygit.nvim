@@ -8,7 +8,7 @@ local M = {
 local api = vim.api
 
 local actions = {
-  hide = function()
+  hide = function(_)
     M.close_window()
   end,
 }
@@ -51,13 +51,18 @@ function M.create_buffer()
     local mappings = require('lazygit.config').mappings
     for mode, keys in pairs(mappings) do
       for key, action in pairs(keys) do
+        ---@type string | function
         local fun
         if type(action) == 'string' then
           fun = actions[action]
         else
           fun = action
         end
-        api.nvim_buf_set_keymap(bufnr, mode, key, '', { callback = fun })
+        api.nvim_buf_set_keymap(bufnr, mode, key, '', {
+          callback = function()
+            fun(bufnr)
+          end,
+        })
       end
     end
   end

@@ -5,13 +5,9 @@ local uv = vim.uv or vim.loop
 function M.open(path, use_last)
   local UI = require('lazygit.ui')
   local UTIL = require('lazygit.util')
-  local gitdir = UTIL.get_root(
-    path
-      or use_last ~= false and UI.last_path
-      or uv.cwd()
-  )
+  local gitdir = UTIL.get_root(path or use_last ~= false and UI.last_path or uv.cwd())
   if not gitdir then
-    vim.notify('not a git repo', vim.log.levels.ERROR, { title = 'Lazygit' })
+    vim.notify('must be run inside a git repository', vim.log.levels.ERROR, { title = 'Lazygit' })
     return
   end
   if gitdir ~= UI.last_path then

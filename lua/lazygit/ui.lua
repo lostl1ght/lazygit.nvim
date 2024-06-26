@@ -71,13 +71,11 @@ end
 function M.create_window()
   local winid = vim.fn.bufwinid(M.bufnr)
   if winid == -1 then
-    api.nvim_cmd({ cmd = 'split', mods = { horizontal = true, split = 'belowright' } }, {})
-    api.nvim_cmd({ cmd = 'wincmd', args = { 'J' } }, {})
-    api.nvim_cmd({
-      cmd = 'resize',
-      args = { math.floor(vim.opt.lines:get() * require('lazygit.config').winscale) },
-    }, {})
-    api.nvim_win_set_buf(0, M.bufnr)
+    vim.api.nvim_open_win(M.bufnr, true, {
+      win = -1,
+      split = 'below',
+      height = math.floor(vim.opt.lines:get() * require('lazygit.config').winscale),
+    })
   else
     api.nvim_set_current_win(winid)
   end

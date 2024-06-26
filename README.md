@@ -6,6 +6,7 @@ A [lazygit](https://github.com/jesseduffield/lazygit) integration into Neovim.
 
 - [Requirements](#requirements)
 - [Installation](#installation)
+- [Usage](#usage)
 - [Plugin Configuration](#plugin-configuration)
 - [Lazygit Configuration](#lazygit-configuration)
 - [Default Mappings](#default-mappings)
@@ -48,6 +49,18 @@ return {
 ```
 
 Calling `setup` is optional.
+
+## Usage
+
+```lua
+---@param path string?
+---@param use_last boolean?
+require('lazygit').open(path?, use_last?)
+```
+
+```vimdoc
+:Lg[!] {path}    Open lazygit on {path}. Bang toggles "use_last".
+```
 
 ## Plugin Configuration
 

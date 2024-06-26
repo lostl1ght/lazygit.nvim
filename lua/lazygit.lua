@@ -2,6 +2,8 @@ local M = {}
 
 local uv = vim.uv or vim.loop
 
+---@param path string?
+---@param use_last boolean?
 function M.open(path, use_last)
   local UI = require('lazygit.ui')
   local UTIL = require('lazygit.util')

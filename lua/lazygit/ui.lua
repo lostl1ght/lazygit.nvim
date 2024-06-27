@@ -83,7 +83,7 @@ end
 
 function M.close_window()
   local winid = vim.fn.bufwinid(M.bufnr)
-  if api.nvim_win_is_valid(winid) then
+  if api.nvim_win_is_valid(winid) and vim.fn.winbufnr(2) ~= -1 then
     api.nvim_win_close(winid, true)
   end
 end

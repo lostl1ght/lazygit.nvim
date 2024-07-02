@@ -26,4 +26,12 @@ function M.setup(opts)
   require('lazygit.config').setup(opts)
 end
 
+function M.hide()
+  require('lazygit.ui').close_window()
+end
+
+function M.show()
+  require('lazygit.ui').create_window()
+end
+
 return M

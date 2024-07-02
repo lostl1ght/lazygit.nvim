@@ -39,7 +39,13 @@ return {
     'samjwill/nvim-unception',
     lazy = false, -- important!
     config = function()
-      vim.env['GIT_EDITOR'] = "nvim --cmd 'let g:unception_block_while_host_edits=1'"
+      vim.env['GIT_EDITOR'] = [[nvim --cmd 'let g:unception_block_while_host_edits=1']]
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'UnceptionEditRequestReceived',
+        callback = function()
+          require('lazygit').hide()
+        end,
+      })
     end,
   },
   config = function()
@@ -68,13 +74,13 @@ Default `setup` values:
 
 ```lua
 {
-  winscale = 0.75,
+  winscale = 0.85,
   mappings = {
     t = {
-      ['<c-q>'] = 'hide',
+      ['q'] = 'hide', -- matches 'quit' lazygit mapping
     },
     n = {
-      ['<c-q>'] = 'hide',
+      ['q'] = 'hide', -- matches 'quit' lazygit mapping
     },
   },
 }

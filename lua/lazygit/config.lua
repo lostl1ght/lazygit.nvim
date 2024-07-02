@@ -4,13 +4,13 @@
 
 local M = {
   config = {
-    winscale = 0.75,
+    winscale = 0.85,
     mappings = {
       t = {
-        ['<c-q>'] = 'hide',
+        ['q'] = 'hide', -- matches 'quit' lazygit mapping
       },
       n = {
-        ['<c-q>'] = 'hide',
+        ['q'] = 'hide', -- matches 'quit' lazygit mapping
       },
     },
   },

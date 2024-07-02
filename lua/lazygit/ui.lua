@@ -15,7 +15,7 @@ local actions = {
 
 function M.create_buffer()
   if M.bufnr == -1 then
-    local bufnr = api.nvim_create_buf(true, true)
+    local bufnr = api.nvim_create_buf(false, true)
     M.bufnr = bufnr
     api.nvim_set_option_value('filetype', 'lazygit', { buf = bufnr })
     api.nvim_create_autocmd('TermLeave', {
@@ -73,10 +73,18 @@ end
 function M.create_window()
   local winid = vim.fn.bufwinid(M.bufnr)
   if winid == -1 then
+    local winscale = require('lazygit.config').winscale
+    local lines = vim.opt.lines:get()
+    local columns = vim.opt.columns:get()
+    local height = math.floor(lines * winscale)
+    local width = math.floor(columns * winscale)
     vim.api.nvim_open_win(M.bufnr, true, {
-      win = -1,
-      split = 'below',
-      height = math.floor(vim.opt.lines:get() * require('lazygit.config').winscale),
+      height = height,
+      width = width,
+      relative = 'editor',
+      row = math.floor((lines - height) / 2),
+      col = math.floor((columns - width) / 2),
+      border = 'single',
     })
   else
     api.nvim_set_current_win(winid)

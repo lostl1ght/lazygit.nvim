@@ -26,35 +26,14 @@ return {
   'lostl1ght/lazygit.nvim',
   lazy = true, -- optional
   cmd = 'Lg',
-  keys = {
-    {
-      '<leader>g',
-      function()
-        require('lazygit').open()
-      end,
-      desc = 'Lazygit',
-    },
-  },
-  dependencies = {
-    'samjwill/nvim-unception',
-    lazy = false, -- important!
-    config = function()
-      vim.env['GIT_EDITOR'] = [[nvim --cmd 'let g:unception_block_while_host_edits=1']]
-      vim.api.nvim_create_autocmd('User', {
-        pattern = 'UnceptionEditRequestReceived',
-        callback = function()
-          require('lazygit').hide()
-        end,
-      })
-    end,
-  },
-  config = function()
-    require('lazygit').setup({}) -- optional
-  end
+  keys = { { '<leader>g', '<cmd>Lg<cr>', desc = 'Lazygit' } },
+  dependencies = { 'samjwill/nvim-unception', lazy = false, --[[ important! ]]},
 }
 ```
 
-Calling `setup` is optional.
+The plugin sets up `$GIT_EDITOR` & `UnceptionEditRequestReceived` user autocommand
+to hide lazygit window when commiting/... **with editor**. See more in `plugin/lazygit.lua`.
+Set `vim.g.loaded_lazygit` to `true` before loading the plugin to disable.
 
 ## Usage
 
@@ -69,6 +48,8 @@ require('lazygit').open(path?, use_last?)
 ```
 
 ## Plugin Configuration
+
+Configure the plugin by calling `require('lazygit').setup()`.
 
 Default `setup` values:
 
@@ -85,6 +66,8 @@ Default `setup` values:
   },
 }
 ```
+
+Set mapping's action to false to disable.
 
 ### Adding a custom mapping
 
@@ -108,4 +91,4 @@ promptToReturnFromSubprocess: false
 
 | Mappings | Action              | Configuration option |
 |----------|---------------------|----------------------|
-| `<c-q>`  | Hide Lazygit window | `hide`               |
+| `q`  | Hide Lazygit window | `hide`               |

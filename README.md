@@ -13,8 +13,8 @@ A [lazygit](https://github.com/jesseduffield/lazygit) integration into Neovim.
 
 ## Requirements
 
-- Neovim >=0.10
-- [Lazygit](https://github.com/jesseduffield/lazygit) >=0.38
+- neovim 0.10
+- lazygit 0.38
 - [nvim-unception](https://github.com/samjwill/nvim-unception)
 
 ## Installation
@@ -32,7 +32,7 @@ return {
 ```
 
 The plugin sets up `$GIT_EDITOR` & `UnceptionEditRequestReceived` user autocommand
-to hide lazygit window when commiting/... **with editor**. See more in `plugin/lazygit.lua`.
+to hide lazygit window when performing an action in lazygit **with editor**. See more in `plugin/lazygit.lua`.
 Set `vim.g.loaded_lazygit` to `true` before loading the plugin to disable.
 
 ## Usage

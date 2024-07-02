@@ -58,11 +58,13 @@ function M.create_buffer()
         else
           fun = action
         end
-        api.nvim_buf_set_keymap(bufnr, mode, key, '', {
-          callback = function()
-            fun(bufnr)
-          end,
-        })
+        if action then
+          api.nvim_buf_set_keymap(bufnr, mode, key, '', {
+            callback = function()
+              fun(bufnr)
+            end,
+          })
+        end
       end
     end
   end

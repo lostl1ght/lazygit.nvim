@@ -20,7 +20,7 @@ function M.check()
     local stdout = get_version()
     local major, minor, patch = stdout:match('version=(%d+)%.?(%d*)%.?(%d*)')
     local version = { major = tonumber(major), minor = tonumber(minor), patch = tonumber(patch) }
-    if version.major >= 0 and version.minor >= 38 and version.patch >= 0 then
+    if version.major > 0 or version.minor >= 38 then
       vim.health.ok(
         ('Lazygit version is %d.%d.%d'):format(version.major, version.minor, version.patch)
       )

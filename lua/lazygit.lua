@@ -14,24 +14,16 @@ function M.open(path, use_last)
   end
   if gitdir ~= UI.last_path then
     UI.drop()
-    vim.wait(25, function()
-      return false
-    end)
+    vim.wait(25, function() return false end)
   end
   UI.open(gitdir)
 end
 
 ---@param opts LazyGitConfig
-function M.setup(opts)
-  require('lazygit.config').setup(opts)
-end
+function M.setup(opts) require('lazygit.config').setup(opts) end
 
-function M.hide()
-  require('lazygit.ui').close_window()
-end
+function M.hide() require('lazygit.ui').close_window() end
 
-function M.show()
-  require('lazygit.ui').create_window()
-end
+function M.show() require('lazygit.ui').create_window() end
 
 return M

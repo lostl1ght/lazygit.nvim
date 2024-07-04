@@ -8,9 +8,7 @@ local M = {
 local api = vim.api
 
 local actions = {
-  hide = function(_)
-    M.close_window()
-  end,
+  hide = function(_) M.close_window() end,
 }
 
 function M.create_buffer()
@@ -24,9 +22,7 @@ function M.create_buffer()
         local winid = vim.fn.bufwinid(bufnr)
 
         if api.nvim_win_is_valid(winid) then
-          vim.defer_fn(function()
-            api.nvim_win_set_cursor(winid, { 1, 0 })
-          end, 20)
+          vim.defer_fn(function() api.nvim_win_set_cursor(winid, { 1, 0 }) end, 20)
         end
       end),
     })
@@ -60,9 +56,7 @@ function M.create_buffer()
         end
         if action then
           api.nvim_buf_set_keymap(bufnr, mode, key, '', {
-            callback = function()
-              fun(bufnr)
-            end,
+            callback = function() fun(bufnr) end,
           })
         end
       end
@@ -102,9 +96,7 @@ function M.start_job(path)
   local jobid = M.jobid
   if jobid == -1 then
     jobid = vim.fn.termopen('lazygit -p ' .. path, {
-      on_exit = function()
-        M.drop()
-      end,
+      on_exit = function() M.drop() end,
     })
     M.jobid = jobid
     M.last_path = path
@@ -131,9 +123,7 @@ function M.push_path(path)
       break
     end
   end
-  if idx then
-    table.remove(M.visited_paths, idx)
-  end
+  if idx then table.remove(M.visited_paths, idx) end
   table.insert(M.visited_paths, 1, path)
 end
 

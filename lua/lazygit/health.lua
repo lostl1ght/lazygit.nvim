@@ -4,7 +4,9 @@ function M.check()
   vim.health.start('lazygit.nvim')
   if vim.fn.has('nvim-0.10.0') == 1 then
     local version = vim.version()
-    vim.health.ok(('{neovim} version `%d.%d.%d`'):format(version.major, version.minor, version.patch))
+    vim.health.ok(
+      ('{neovim} version `%d.%d.%d`'):format(version.major, version.minor, version.patch)
+    )
   else
     vim.health.error('lazygit.nvim requires neovim >=0.10.0')
   end

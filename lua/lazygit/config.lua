@@ -25,9 +25,7 @@ function M.setup(opts)
   vim.validate({
     winscale = {
       opts.winscale,
-      function(v)
-        return v == nil or v > 0 and v <= 1
-      end,
+      function(v) return v == nil or v > 0 and v <= 1 end,
       'value between 0 and 1',
     },
   })
@@ -36,9 +34,7 @@ function M.setup(opts)
       vim.validate({
         mode = {
           mode,
-          function(v)
-            return v == 't' or v == 'n'
-          end,
+          function(v) return v == 't' or v == 'n' end,
           'only "normal" or "terminal" modes accepted',
         },
       })
@@ -65,9 +61,7 @@ end
 
 setmetatable(M, {
   __index = function(self, key)
-    if key ~= 'setup' then
-      return self.config[key]
-    end
+    if key ~= 'setup' then return self.config[key] end
   end,
 })
 

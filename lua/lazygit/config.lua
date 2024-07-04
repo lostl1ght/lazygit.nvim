@@ -7,10 +7,10 @@ local M = {
     winscale = 0.85,
     mappings = {
       t = {
-        ['q'] = 'hide', -- matches 'quit' lazygit mapping
+        ['<c-q>'] = 'hide', -- matches 'quit' lazygit mapping
       },
       n = {
-        ['q'] = 'hide', -- matches 'quit' lazygit mapping
+        ['<c-q>'] = 'hide', -- matches 'quit' lazygit mapping
       },
     },
   },

@@ -91,4 +91,4 @@ promptToReturnFromSubprocess: false
 
 | Mappings | Action              | Configuration option |
 |----------|---------------------|----------------------|
-| `q`  | Hide Lazygit window | `hide`               |
+| `<c-q>`  | Hide Lazygit window | `hide`               |

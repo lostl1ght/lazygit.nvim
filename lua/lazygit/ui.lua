@@ -29,11 +29,9 @@ function M.create_buffer()
     api.nvim_create_autocmd('BufEnter', {
       buffer = bufnr,
       callback = function(args)
-        vim.defer_fn(function()
-          local winid = vim.fn.bufwinid(args.buf)
-          api.nvim_win_set_cursor(winid, { 1, 0 })
-          api.nvim_cmd({ cmd = 'startinsert' }, {})
-        end, 20)
+        local winid = vim.fn.bufwinid(args.buf)
+        api.nvim_win_set_cursor(winid, { 1, 0 })
+        vim.defer_fn(function() api.nvim_cmd({ cmd = 'startinsert' }, {}) end, 50)
       end,
     })
     api.nvim_create_autocmd('BufWinEnter', {

@@ -25,8 +25,8 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 return {
   'lostl1ght/lazygit.nvim',
   lazy = true, -- optional
-  cmd = 'Lg',
-  keys = { { '<leader>g', '<cmd>Lg<cr>', desc = 'Lazygit' } },
+  cmd = 'Lazygit',
+  keys = { { '<leader>g', '<cmd>Lazygit<cr>', desc = 'Lazygit' } },
   dependencies = { 'samjwill/nvim-unception', lazy = false, --[[ important! ]]},
 }
 ```
@@ -44,7 +44,7 @@ require('lazygit').open(path?, use_last?)
 ```
 
 ```vimdoc
-:Lg[!] {path}    Open lazygit on {path}. Bang toggles "use_last".
+:Lazygit[!] {path}    Open lazygit on {path}. Bang toggles "use_last".
 ```
 
 ## Plugin Configuration

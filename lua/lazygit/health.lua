@@ -1,6 +1,6 @@
 local M = {}
 
-function M.check()
+M.check = function()
   vim.health.start('lazygit.nvim')
   if vim.fn.has('nvim-0.10.0') == 1 then
     local version = vim.version()

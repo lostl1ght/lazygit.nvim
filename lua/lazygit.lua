@@ -4,7 +4,7 @@ local uv = vim.uv or vim.loop
 
 ---@param path string?
 ---@param use_last boolean?
-function M.open(path, use_last)
+M.open = function(path, use_last)
   local UI = require('lazygit.ui')
   local UTIL = require('lazygit.util')
   local gitdir = UTIL.get_root(path or use_last ~= false and UI.last_path or uv.cwd())
@@ -20,10 +20,10 @@ function M.open(path, use_last)
 end
 
 ---@param opts LazyGitConfig
-function M.setup(opts) require('lazygit.config').setup(opts) end
+M.setup = function(opts) require('lazygit.config').setup(opts) end
 
-function M.hide() require('lazygit.ui').close_window() end
+M.hide = function() require('lazygit.ui').close_window() end
 
-function M.show() require('lazygit.ui').create_window() end
+M.show = function() require('lazygit.ui').create_window() end
 
 return M

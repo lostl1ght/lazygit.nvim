@@ -3,7 +3,7 @@
 ---@field mappings table
 
 local M = {
-  config = {
+  options = {
     winscale = 0.85,
     mappings = {
       t = {
@@ -21,7 +21,7 @@ local predef = {
 }
 
 ---@param opts LazyGitConfig
-function M.setup(opts)
+M.setup = function(opts)
   vim.validate({
     winscale = {
       opts.winscale,
@@ -56,12 +56,12 @@ function M.setup(opts)
       end
     end
   end
-  M.config = vim.tbl_deep_extend('force', M.config, opts or {})
+  M.options = vim.tbl_deep_extend('force', M.options, opts or {})
 end
 
 setmetatable(M, {
   __index = function(self, key)
-    if key ~= 'setup' then return self.config[key] end
+    if key ~= 'setup' then return self.options[key] end
   end,
 })
 

@@ -11,7 +11,7 @@ local actions = {
   hide = function(_) M.close_window() end,
 }
 
-function M.create_buffer()
+M.create_buffer = function()
   if M.bufnr == -1 then
     local bufnr = api.nvim_create_buf(false, true)
     M.bufnr = bufnr
@@ -62,7 +62,7 @@ function M.create_buffer()
   end
 end
 
-function M.create_window()
+M.create_window = function()
   local winid = vim.fn.bufwinid(M.bufnr)
   if winid == -1 then
     local winscale = require('lazygit.config').winscale
@@ -83,14 +83,14 @@ function M.create_window()
   end
 end
 
-function M.close_window()
+M.close_window = function()
   local winid = vim.fn.bufwinid(M.bufnr)
   if api.nvim_win_is_valid(winid) and vim.fn.winbufnr(2) ~= -1 then
     api.nvim_win_close(winid, true)
   end
 end
 
-function M.start_job(path)
+M.start_job = function(path)
   local jobid = M.jobid
   if jobid == -1 then
     jobid = vim.fn.termopen('lazygit -p ' .. path, {
@@ -102,7 +102,7 @@ function M.start_job(path)
   end
 end
 
-function M.drop()
+M.drop = function()
   local bufnr = M.bufnr
   M.close_window()
   if api.nvim_buf_is_loaded(bufnr) then
@@ -113,7 +113,7 @@ function M.drop()
   M.jobid = -1
 end
 
-function M.push_path(path)
+M.push_path = function(path)
   local idx
   for i, v in ipairs(M.visited_paths) do
     if v == path then
@@ -125,7 +125,7 @@ function M.push_path(path)
   table.insert(M.visited_paths, 1, path)
 end
 
-function M.open(path)
+M.open = function(path)
   M.create_buffer()
   M.create_window()
   M.start_job(path)

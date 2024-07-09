@@ -23,11 +23,13 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 return {
-  'lostl1ght/lazygit.nvim',
-  lazy = true, -- optional
-  cmd = 'Lazygit',
-  keys = { { '<leader>g', '<cmd>Lazygit<cr>', desc = 'Lazygit' } },
-  dependencies = { 'samjwill/nvim-unception', lazy = false, --[[ important! ]]},
+  { 'samjwill/nvim-unception', lazy = false --[[ important ]] },
+  {
+    'lostl1ght/lazygit.nvim',
+    lazy = true,
+    cmd = 'Lazygit',
+    keys = { { '<leader>g', '<cmd>Lazygit<cr>', desc = 'Lazygit' } },
+  },
 }
 ```
 

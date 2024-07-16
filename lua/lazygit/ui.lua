@@ -63,6 +63,7 @@ M.create_buffer = function()
 end
 
 M.create_window = function()
+  if M.bufnr == -1 then return end
   local winid = vim.fn.bufwinid(M.bufnr)
   if winid == -1 then
     local winscale = require('lazygit.config').winscale

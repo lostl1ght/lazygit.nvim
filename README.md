@@ -7,6 +7,7 @@ A [lazygit](https://github.com/jesseduffield/lazygit) integration into Neovim.
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Preventing nesting](#preventing-nesting)
 - [Plugin Configuration](#plugin-configuration)
 - [Lazygit Configuration](#lazygit-configuration)
 - [Default Mappings](#default-mappings)
@@ -15,7 +16,8 @@ A [lazygit](https://github.com/jesseduffield/lazygit) integration into Neovim.
 
 - neovim 0.10
 - lazygit 0.38
-- [nvim-unception](https://github.com/samjwill/nvim-unception)
+- [flatten.nvim](https://github.com/willothy/flatten.nvim) (optional)
+- [nvim-unception](https://github.com/samjwill/nvim-unception) (optional)
 
 ## Installation
 
@@ -23,19 +25,12 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 return {
-  { 'samjwill/nvim-unception', lazy = false --[[ important ]] },
-  {
-    'lostl1ght/lazygit.nvim',
-    lazy = true,
-    cmd = 'Lazygit',
-    keys = { { '<leader>g', '<cmd>Lazygit<cr>', desc = 'Lazygit' } },
-  },
+  'lostl1ght/lazygit.nvim',
+  lazy = true,
+  cmd = 'Lazygit',
+  keys = { { '<leader>g', '<cmd>Lazygit<cr>', desc = 'Lazygit' } },
 }
 ```
-
-The plugin sets up `$GIT_EDITOR` & `UnceptionEditRequestReceived` user autocommand
-to hide lazygit window when performing an action in lazygit **with editor**. See more in `plugin/lazygit.lua`.
-Set `vim.g.loaded_lazygit` to `true` before loading the plugin to disable.
 
 ## Usage
 
@@ -47,6 +42,41 @@ require('lazygit').open(path?, use_last?)
 
 ```vimdoc
 :Lazygit[!] {path}    Open lazygit on {path}. Bang toggles "use_last".
+```
+
+## Preventing nesting
+
+With [flatten.nvim](https://github.com/willothy/flatten.nvim):
+
+```lua
+require('flatten').setup({
+  callbacks = {
+    pre_open = function() require('lazygit').hide() end,
+    post_open = function(bufnr, _, ft, _)
+      if ft == 'gitcommit' or ft == 'gitrebase' then
+        vim.api.nvim_create_autocmd('BufWritePost', {
+          buffer = bufnr,
+          once = true,
+          callback = vim.schedule_wrap(function() vim.api.nvim_buf_delete(bufnr, {}) end),
+        })
+      end
+    end,
+    block_end = vim.schedule_wrap(function() require('lazygit').show() end),
+  },
+  window = {
+    open = 'alternate',
+  },
+})
+```
+
+With [nvim-unception](https://github.com/samjwill/nvim-unception):
+
+```lua
+vim.env['GIT_EDITOR'] = [[nvim --cmd 'let g:unception_block_while_host_edits=1']]
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'UnceptionEditRequestReceived',
+  callback = function() require('lazygit').hide() end,
+})
 ```
 
 ## Plugin Configuration

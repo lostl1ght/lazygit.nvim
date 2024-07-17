@@ -50,21 +50,10 @@ With [flatten.nvim](https://github.com/willothy/flatten.nvim):
 
 ```lua
 require('flatten').setup({
+  window = { open = 'smart' },
   callbacks = {
-    pre_open = function() require('lazygit').hide() end,
-    post_open = function(bufnr, _, ft, _)
-      if ft == 'gitcommit' or ft == 'gitrebase' then
-        vim.api.nvim_create_autocmd('BufWritePost', {
-          buffer = bufnr,
-          once = true,
-          callback = vim.schedule_wrap(function() vim.api.nvim_buf_delete(bufnr, {}) end),
-        })
-      end
-    end,
+    pre_open = vim.schedule_wrap(function() require('lazygit').hide() end),
     block_end = vim.schedule_wrap(function() require('lazygit').show() end),
-  },
-  window = {
-    open = 'alternate',
   },
 })
 ```
@@ -115,7 +104,7 @@ end
 
 ```yaml
 os:
-  editPreset: 'nvim'
+  editPreset: 'nvim-remote'
 promptToReturnFromSubprocess: false
 ```
 

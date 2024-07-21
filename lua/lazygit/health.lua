@@ -8,7 +8,7 @@ M.check = function()
       ('{neovim} version `%d.%d.%d`'):format(version.major, version.minor, version.patch)
     )
   else
-    vim.health.error('lazygit.nvim requires neovim >=0.10.0')
+    vim.health.error('*lazygit.nvim* requires {neovim} version 0.10.0')
   end
   if vim.fn.executable('lazygit') == 1 then
     local function get_version()
@@ -20,7 +20,12 @@ M.check = function()
       end
     end
     local stdout = get_version()
-    local major, minor, patch = stdout:match('version=(%d+)%.?(%d*)%.?(%d*)')
+    local major, minor, patch = stdout:match(', version=(%d+)%.?(%d*)%.?(%d*),')
+    if not major or not minor or not patch then
+      local version = stdout:match(', version=(%w*),')
+      vim.health.warn(('{lazygit} version `%s`'):format(version))
+      return
+    end
     local version = { major = tonumber(major), minor = tonumber(minor), patch = tonumber(patch) }
     if version.major > 0 or version.minor >= 38 then
       vim.health.ok(
@@ -36,7 +41,7 @@ M.check = function()
       )
     end
   else
-    vim.health.error('Lazygit is NOT installed')
+    vim.health.error('{lazygit} is NOT installed')
   end
 end
 

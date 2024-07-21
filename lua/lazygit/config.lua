@@ -60,9 +60,7 @@ M.setup = function(opts)
 end
 
 setmetatable(M, {
-  __index = function(self, key)
-    if key ~= 'setup' then return self.options[key] end
-  end,
+  __index = function(self, key) return self.options[key] end,
 })
 
 return M

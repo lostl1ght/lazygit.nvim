@@ -89,6 +89,7 @@ M.close_window = function()
   if api.nvim_win_is_valid(winid) and vim.fn.winbufnr(2) ~= -1 then
     api.nvim_win_close(winid, true)
   end
+  vim.defer_fn(function() vim.cmd('redrawstatus') end, 50)
 end
 
 M.start_job = function(path)
